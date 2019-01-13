@@ -6,7 +6,7 @@ import numpy as np
 import psutil
 import tensorflow as tf
 from mpi4py import MPI
-from baselines import logger
+import logger
 import tf_util
 from recorder import Recorder
 from utils import explained_variance

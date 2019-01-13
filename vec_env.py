@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from multiprocessing import Process, Pipe
-from baselines import logger
+import logger
 from utils import tile_images
 
 class AlreadySteppingError(Exception):

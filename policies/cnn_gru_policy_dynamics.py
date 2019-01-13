@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from baselines import logger
+import logger
 from utils import fc, conv
 from stochastic_policy import StochasticPolicy
 from tf_util import get_available_gpus

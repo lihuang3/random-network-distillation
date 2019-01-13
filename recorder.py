@@ -4,7 +4,7 @@ from collections import defaultdict
 
 import numpy as np
 
-from baselines import logger
+import logger
 from mpi4py import MPI
 
 def is_square(n):
