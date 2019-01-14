@@ -2,8 +2,6 @@ import tensorflow as tf
 from collections import OrderedDict
 from gym import spaces
 
-import sys
-sys.path.append('/home/cougarnet.uh.edu/lhuang28/baselines')
 from baselines.common.distributions import make_pdtype
 
 def canonical_dtype(orig_dt):

@@ -3,7 +3,7 @@ from collections import deque, defaultdict
 from copy import copy
 
 import numpy as np
-import psutil
+# import psutil
 import tensorflow as tf
 from mpi4py import MPI
 import logger
@@ -318,7 +318,7 @@ class PpoAgent(object):
             reset_counter = self.I.reset_counter
         )
 
-        info[f'mem_available'] = psutil.virtual_memory().available
+        # info[f'mem_available'] = psutil.virtual_memory().available
 
         to_record = {'acs': self.I.buf_acs,
                      'rews_int': self.I.buf_rews_int,
@@ -334,8 +334,8 @@ class PpoAgent(object):
                      }
         if self.I.venvs[0].record_obs:
             to_record['obs'] = self.I.buf_obs[None]
-        self.recorder.record(bufs=to_record,
-                             infos=self.I.buf_epinfos)
+        # self.recorder.record(bufs=to_record,
+        #                      infos=self.I.buf_epinfos)
 
 
         #Create feeddict for optimization.
@@ -353,7 +353,7 @@ class PpoAgent(object):
                 (self.stochpol.ph_new, self.I.buf_news),
             ])
 
-        verbose = True
+        verbose = False
         if verbose and self.is_log_leader:
             samples = np.prod(self.I.buf_advs.shape)
             logger.info("buffer shape %s, samples_per_mpi=%i, mini_per_mpi=%i, samples=%i, mini=%i " % (
@@ -437,10 +437,10 @@ class PpoAgent(object):
                     #Information like rooms visited is added to info on end of episode.
                     epinfos.append(info['episode'])
                     info_with_places = info['episode']
-                    try:
-                        info_with_places['places'] = info['episode']['visited_rooms']
-                    except:
-                        import ipdb; ipdb.set_trace()
+                    # try:
+                    #     info_with_places['places'] = 0 # info['episode']['visited_rooms']
+                    # except:
+                    #     import ipdb; ipdb.set_trace()
                     self.I.buf_epinfos[env_pos_in_lump+l*self.I.lump_stride][t] = info_with_places
 
             sli = slice(l * self.I.lump_stride, (l + 1) * self.I.lump_stride)

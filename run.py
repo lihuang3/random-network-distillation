@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import functools
 import os
+import sys
+sys.path.append('/project/becker/lihuang3/github/baselines')
 
 import logger
 from mpi4py import MPI
@@ -12,6 +14,8 @@ from policies.cnn_policy_param_matched import CnnPolicy
 from ppo_agent import PpoAgent
 from utils import set_global_seeds
 from vec_env import VecFrameStack
+
+
 
 
 def train(*, env_id, num_env, hps, num_timesteps, seed):
@@ -55,7 +59,7 @@ def train(*, env_id, num_env, hps, num_timesteps, seed):
         nminibatches=hps.pop('nminibatches'),
         lr=hps.pop('lr'),
         cliprange=0.1,
-        nsteps=128,
+        nsteps=2000,
         ent_coef=0.001,
         max_grad_norm=hps.pop('max_grad_norm'),
         use_news=hps.pop("use_news"),
@@ -92,7 +96,7 @@ def main():
     parser = arg_parser()
     add_env_params(parser)
     parser.add_argument('--num-timesteps', type=int, default=int(3e8))
-    parser.add_argument('--num_env', type=int, default=1)
+    parser.add_argument('--num_env', type=int, default=64)
     parser.add_argument('--use_news', type=int, default=0)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--gamma_ext', type=float, default=0.99)
@@ -122,7 +126,7 @@ def main():
 
     hps = dict(
         frame_stack=4,
-        nminibatches=4,
+        nminibatches=32,
         nepochs=4,
         lr=0.0001,
         max_grad_norm=0.0,
